@@ -32,6 +32,9 @@ public class Main {
         p6_ListarMedicos(p, s);
         p7_ListarPacientes(p, s);
         p.imprimirResultadosPrueba();
+        System.out.println("");
+
+
     }
 
     public static void p1_creacionSistema(Prueba p, Sistema s) {
