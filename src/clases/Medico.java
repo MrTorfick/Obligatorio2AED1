@@ -8,8 +8,7 @@ public class Medico implements Comparable<Medico> {
     private int codMedico;
     private int tel;
     private int especialidad;
-    private ListaSimple<Paciente> listaPacientes;
-
+    private ListaSimple<Consulta> listaPacientes;
 
     public Medico(String nombre, int codMedico, int tel, int especialidad) {
         this.setNombre(nombre);
@@ -78,18 +77,19 @@ public class Medico implements Comparable<Medico> {
         this.especialidad = especialidad;
     }
 
+    //Compara el nombre de un medico con otro y luego lo ordena alfabeticamente por nombre
     @Override
     public int compareTo(Medico o) {
         return this.getNombre().compareTo(o.getNombre());
     }
 
     public boolean equals(Object o) {
-        Medico medico = (Medico)o;//Casteo
+        Medico medico = (Medico) o;//Casteo
         return this.getCodMedico() == medico.getCodMedico();
     }
-    
-    public String toString(){
-        return "Nombre: " + this.getNombre()+ "\nCodigo de medico: " + this.getCodMedico();
+
+    public String toString() {
+        return "Nombre: " + this.getNombre() + "\nCodigo de medico: " + this.getCodMedico();
     }
 
 }

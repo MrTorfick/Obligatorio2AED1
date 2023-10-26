@@ -23,8 +23,6 @@ public class Consulta implements Comparable<Consulta> {
     }
 
 
-
-
     public int getCodConsulta() {
         return codConsulta;
     }
