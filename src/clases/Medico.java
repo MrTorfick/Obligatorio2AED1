@@ -1,11 +1,15 @@
 package clases;
 
+import tads.ListaSimple;
+
 public class Medico implements Comparable<Medico> {
 
     private String nombre;
     private int codMedico;
     private int tel;
     private int especialidad;
+    private ListaSimple<Paciente> listaPacientes;
+
 
     public Medico(String nombre, int codMedico, int tel, int especialidad) {
         this.setNombre(nombre);

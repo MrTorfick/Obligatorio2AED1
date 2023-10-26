@@ -120,7 +120,7 @@ public class Sistema implements IObligatorio {
     }
 
     @Override
-    public Retorno cerrarConsulta(String codMédico, Date fechaConsulta) {
+    public Retorno cerrarConsulta(int codMédico, Date fechaConsulta) {
         return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
     }
 
@@ -147,7 +147,7 @@ public class Sistema implements IObligatorio {
     }
 
     @Override
-    public Retorno listarPacientesEnEspera(String codMédico, Date fecha) {
+    public Retorno listarPacientesEnEspera(int codMédico, Date fecha) {
         return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
     }
 

@@ -33,7 +33,7 @@ public interface IObligatorio {
     //pre:detallesDeConsulta no puede ser nulo      post:Se termina la consulta del paciente con el medico
     public Retorno terminarConsultaMedicoPaciente(int CIPaciente, int codMedico, String detalleDeConsulta);   
     //pre:      post:Se cierra la consulta para una fecha en especifico
-    public Retorno cerrarConsulta(String codMédico, Date fechaConsulta); 
+    public Retorno cerrarConsulta(int codMédico, Date fechaConsulta);
     
  
       /*
@@ -47,7 +47,7 @@ public interface IObligatorio {
     //pre:      post:Se listan las consultas asignadas a ese medico agrupadas por dia
     public Retorno listarConsultas(int codMedico); 
     //pre:      post:Lista a todos los pacientes en espera, con ese medico para esa fecha
-    public Retorno listarPacientesEnEspera (String codMedico, Date fecha);    
+    public Retorno listarPacientesEnEspera (int codMedico, Date fecha);
     //pre:      post:Lista las consultas pendientes de un paciente
     public Retorno consultasPendientesPaciente(int CIPaciente);   
     //pre:      post:Lista todas las consultas a las que asistio o no asistio el paciente
