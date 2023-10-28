@@ -1,12 +1,11 @@
 package inicio;
 
 import clases.*;
+import enums.Estado;
 import sistemaAutogestion.*;
 import tads.*;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Queue;
 
 public class Main {
 
@@ -14,12 +13,16 @@ public class Main {
         Prueba p = new Prueba();
         Sistema s = new Sistema();
 
-        Medico medico1 = new Medico("Medico_1", 5, 382839132, 5);
-        Medico medico2 = new Medico("Medico_2", 3, 727473857, 5);
-        Medico medico3 = new Medico("Medico_3", 44, 207584365, 5);
-        Medico medico4 = new Medico("Medico_4", 1, 764285693, 5);
 
-        ListaSimple<Medico> listaMedicos = new ListaSimple(40);
+        Consulta consulta1 = new Consulta(85743756, 5, new Date(2023 - 1900, 5, 15), Estado.Pendiente, 1);
+        Lista<Consulta> listaConsultas = new Lista(0);
+        listaConsultas.agregarInicio(consulta1);
+        Medico medico1 = new Medico("Medico_1", 5, 382839132, 5, listaConsultas);
+        //Medico medico2 = new Medico("Medico_2", 3, 727473857, 5);
+        //Medico medico3 = new Medico("Medico_3", 44, 207584365, 5);
+        //Medico medico4 = new Medico("Medico_4", 1, 764285693, 5);
+
+        Lista<Medico> listaMedicos = new Lista(40);
         listaMedicos.agregarInicio(medico1);
 
         Paciente paciente1 = new Paciente("Paciente_1", 85743756, "Direccion Paciente 1");
@@ -66,6 +69,7 @@ public class Main {
 
     public static void p3_EliminarMedico(Prueba p, Sistema s) {
         p.ver(s.eliminarMedico(1).resultado, Retorno.Resultado.OK, "Se elimino correctamente el medico");
+        p.ver(s.eliminarMedico(11).resultado, Retorno.Resultado.OK, "Se elimino correctamente el medico");
         p.ver(s.eliminarMedico(10).resultado, Retorno.Resultado.ERROR_1, "No se elimina el medico, error1");
     }
 
@@ -83,22 +87,23 @@ public class Main {
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
-        p.ver(s.reservaConsulta(1, 1, new Date(2023 - 1900, 5, 15)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.reservaConsulta(2, 758472658, new Date(2022 - 1900, 02, 25, 14, 30)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
         p.ver(s.cancelarReserva(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
-    public static void p8_AnunciaLlegada(Prueba p, Sistema s){
-        p.ver(s.anunciaLlegada(1,1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+    public static void p8_AnunciaLlegada(Prueba p, Sistema s) {
+        p.ver(s.anunciaLlegada(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
-    public static void p9_terminarConsultaMedicoPaciente(Prueba p , Sistema s){
-        p.ver(s.terminarConsultaMedicoPaciente(1,1, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Funcion no implementada");
+    public static void p9_terminarConsultaMedicoPaciente(Prueba p, Sistema s) {
+        p.ver(s.terminarConsultaMedicoPaciente(1, 1, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
-    public static void p10_cerrarConsulta(Prueba p, Sistema s){
-        p.ver(s.cerrarConsulta(1, new Date(2023-1900, 2, 20)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+
+    public static void p10_cerrarConsulta(Prueba p, Sistema s) {
+        p.ver(s.cerrarConsulta(1, new Date(2023 - 1900, 2, 20)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
     public static void p11_ListarMedicos(Prueba p, Sistema s) {
@@ -108,19 +113,21 @@ public class Main {
     public static void p12_ListarPacientes(Prueba p, Sistema s) {
         p.ver(s.listarPacientes().resultado, Retorno.Resultado.OK, "Se listaron los pacientes");
     }
-    public static void p13_ListarConsultas(Prueba p, Sistema s){
-        p.ver(s.listarConsultas(1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+
+    public static void p13_ListarConsultas(Prueba p, Sistema s) {
+        p.ver(s.listarConsultas(2).resultado, Retorno.Resultado.OK, "Se listan las consultas");
     }
 
-    public static void p14_consultasPendientesPaciente(Prueba p, Sistema s){
+    public static void p14_consultasPendientesPaciente(Prueba p, Sistema s) {
         p.ver(s.consultasPendientesPaciente(1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
-    public static void p15_historiaClínicaPaciente(Prueba p, Sistema s){
+
+    public static void p15_historiaClínicaPaciente(Prueba p, Sistema s) {
         p.ver(s.historiaClínicaPaciente(1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
-    public static void p16_reporteDePacientesXFechaYEspecialidad(Prueba p, Sistema s){
-        p.ver(s.reporteDePacientesXFechaYEspecialidad(1,1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+    public static void p16_reporteDePacientesXFechaYEspecialidad(Prueba p, Sistema s) {
+        p.ver(s.reporteDePacientesXFechaYEspecialidad(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
 

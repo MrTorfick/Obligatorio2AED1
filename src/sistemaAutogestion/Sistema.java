@@ -1,14 +1,18 @@
 package sistemaAutogestion;
 
+import clases.Consulta;
 import clases.Medico;
 import clases.Paciente;
+
 import java.util.Date;
+
+import enums.Estado;
 import tads.*;
 
 public class Sistema implements IObligatorio {
 
-    private ListaSimple listaMedicos;
-    private ListaSimple listaPacientes;
+    private Lista listaMedicos;
+    private Lista listaPacientes;
 
     @Override
     public Retorno crearSistemaDeAutogestion(int maxPacientesporMedico) {
@@ -16,8 +20,8 @@ public class Sistema implements IObligatorio {
         if (maxPacientesporMedico <= 0 || maxPacientesporMedico > 15) {
             r.resultado = Retorno.Resultado.ERROR_1;
         } else {
-            listaMedicos = new ListaSimple(maxPacientesporMedico);
-            listaPacientes = new ListaSimple(0);
+            listaMedicos = new Lista(maxPacientesporMedico);
+            listaPacientes = new Lista(0);
             r.resultado = Retorno.Resultado.OK;
         }
         return r;
@@ -27,7 +31,7 @@ public class Sistema implements IObligatorio {
     public Retorno registrarMedico(String nombre, int codMedico, int tel, int especialidad) {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
-        Medico medico = new Medico(nombre, codMedico, tel, especialidad);
+        Medico medico = new Medico(nombre, codMedico, tel, especialidad, new Lista<Consulta>(0));
 
         if (listaMedicos.existeDato(medico)) {
             r.resultado = Retorno.Resultado.ERROR_1;
@@ -101,7 +105,31 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno reservaConsulta(int codMedico, int ciPaciente, Date fecha) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+
+        Medico medico = new Medico(codMedico);
+        Paciente paciente = new Paciente(ciPaciente);
+        Consulta consulta = new Consulta(1);
+
+        if (!listaPacientes.existeDato(paciente)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+        } else if (!listaMedicos.existeDato(medico)) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+        } else {
+            Nodo nodo = listaMedicos.obtenerElemento(medico);
+            medico = (Medico) nodo.getDato();
+            if (medico.getListaPacientes() == null || !medico.getListaPacientes().existeDato(consulta)) {
+                consulta.setCiPaciente(paciente.getCI());
+                consulta.setCodMedico(medico.getCodMedico());
+                consulta.setFecha(fecha);
+                consulta.setEstado(Estado.Pendiente);
+                medico.getListaPacientes().agregarFinal(consulta);
+                r.resultado = Retorno.Resultado.OK;
+            } else {
+                r.resultado = Retorno.Resultado.ERROR_4;
+            }
+        }
+        return r;
     }
 
     @Override
@@ -143,7 +171,18 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarConsultas(int codMédico) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Medico medico = new Medico(codMédico);
+        Nodo nodo = listaMedicos.obtenerElemento(medico);
+        if (nodo == null) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        Medico medicoAux = (Medico) nodo.getDato();
+        medicoAux.getListaPacientes().mostrar();
+        r.resultado = Retorno.Resultado.OK;
+        return r;
+
     }
 
     @Override

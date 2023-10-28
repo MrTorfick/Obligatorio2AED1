@@ -2,24 +2,32 @@ package clases;
 
 import enums.Estado;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Consulta implements Comparable<Consulta> {
 
     private int codConsulta;
+    private int ultimoId = 1;
     private int CiPaciente;
     private int CodMedico;
     private Date Fecha;
     private Estado estado;
     private int NumeroDeReserva;
 
-    public Consulta(int codConsulta, int ciPaciente, int codMedico, Date fecha, Estado estado, int numeroDeReserva) {
-        this.setCodConsulta(codConsulta);
+    public Consulta(int ciPaciente, int codMedico, Date fecha, Estado estado, int numeroDeReserva) {
+        this.setCodConsulta(ultimoId);
+        ultimoId++;
         this.setCiPaciente(ciPaciente);
         this.setCodMedico(codMedico);
         this.setFecha(fecha);
         this.setEstado(estado);
         this.setNumeroDeReserva(numeroDeReserva);
+    }
+
+
+    public Consulta(int codConsulta) {
+        this.setCodConsulta(codConsulta);
     }
 
 
@@ -71,8 +79,19 @@ public class Consulta implements Comparable<Consulta> {
         NumeroDeReserva = numeroDeReserva;
     }
 
+    public boolean equals(Object o) {
+        Consulta consulta = (Consulta) o;//Casteo
+        return this.getCodConsulta() == consulta.getCodConsulta();
+    }
+
     @Override
     public int compareTo(Consulta o) {
         return 0;
+    }
+
+
+    public String toString() {
+        return "Cedula del Paciente " + this.getCiPaciente() + "\nCodigo de medico: " + this.getCodMedico() +
+                "\nFecha: " + this.getFecha() + "\nEstado: " + this.getEstado() + "\nNumero de reserva: " + this.getNumeroDeReserva();
     }
 }

@@ -1,6 +1,6 @@
 package clases;
 
-import tads.ListaSimple;
+import tads.Lista;
 
 public class Medico implements Comparable<Medico> {
 
@@ -8,13 +8,14 @@ public class Medico implements Comparable<Medico> {
     private int codMedico;
     private int tel;
     private int especialidad;
-    private ListaSimple<Consulta> listaPacientes;
+    private Lista<Consulta> listaPacientes;
 
-    public Medico(String nombre, int codMedico, int tel, int especialidad) {
+    public Medico(String nombre, int codMedico, int tel, int especialidad, Lista<Consulta> listaPacientes) {
         this.setNombre(nombre);
         this.setCodMedico(codMedico);
         this.setTel(tel);
         this.setEspecialidad(especialidad);
+        this.setListaPacientes(listaPacientes);
     }
 
     public Medico(int codMedico) {
@@ -75,6 +76,14 @@ public class Medico implements Comparable<Medico> {
      */
     public void setEspecialidad(int especialidad) {
         this.especialidad = especialidad;
+    }
+
+    public Lista<Consulta> getListaPacientes() {
+        return listaPacientes;
+    }
+
+    public void setListaPacientes(Lista<Consulta> listaPacientes) {
+        this.listaPacientes = listaPacientes;
     }
 
     //Compara el nombre de un medico con otro y luego lo ordena alfabeticamente por nombre
