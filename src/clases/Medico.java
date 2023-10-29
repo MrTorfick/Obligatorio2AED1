@@ -1,6 +1,9 @@
 package clases;
 
+import tads.Cola;
 import tads.Lista;
+
+import java.util.Date;
 
 public class Medico implements Comparable<Medico> {
 
@@ -9,6 +12,8 @@ public class Medico implements Comparable<Medico> {
     private int tel;
     private int especialidad;
     private Lista<Consulta> listaPacientes;
+    private Cola<Paciente> colaPacientes;
+    private Lista<Date> listaFechas;
 
     public Medico(String nombre, int codMedico, int tel, int especialidad, Lista<Consulta> listaPacientes) {
         this.setNombre(nombre);
@@ -21,6 +26,15 @@ public class Medico implements Comparable<Medico> {
     public Medico(int codMedico) {
         this.setCodMedico(codMedico);
     }
+
+    public Lista<Date> getListaFechas() {
+        return listaFechas;
+    }
+
+    public void setListaFechas(Lista<Date> fecha) {
+        this.listaFechas = fecha;
+    }
+
 
     /**
      * @return the nombre

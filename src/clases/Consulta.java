@@ -7,37 +7,28 @@ import java.util.Date;
 
 public class Consulta implements Comparable<Consulta> {
 
-    private int codConsulta;
+    private int NumeroDeReserva;
     private int ultimoId = 1;
     private int CiPaciente;
     private int CodMedico;
     private Date Fecha;
     private Estado estado;
-    private int NumeroDeReserva;
 
-    public Consulta(int ciPaciente, int codMedico, Date fecha, Estado estado, int numeroDeReserva) {
-        this.setCodConsulta(ultimoId);
-        ultimoId++;
+
+    public Consulta(int ciPaciente, int codMedico, Date fecha, Estado estado) {
         this.setCiPaciente(ciPaciente);
         this.setCodMedico(codMedico);
         this.setFecha(fecha);
         this.setEstado(estado);
-        this.setNumeroDeReserva(numeroDeReserva);
+        this.setNumeroDeReserva(ultimoId);
+        ultimoId++;
     }
 
 
-    public Consulta(int codConsulta) {
-        this.setCodConsulta(codConsulta);
+    public Consulta(int CodReserva) {
+        this.setNumeroDeReserva(CodReserva);
     }
 
-
-    public int getCodConsulta() {
-        return codConsulta;
-    }
-
-    public void setCodConsulta(int codConsulta) {
-        this.codConsulta = codConsulta;
-    }
 
     public int getCiPaciente() {
         return CiPaciente;
@@ -81,7 +72,7 @@ public class Consulta implements Comparable<Consulta> {
 
     public boolean equals(Object o) {
         Consulta consulta = (Consulta) o;//Casteo
-        return this.getCodConsulta() == consulta.getCodConsulta();
+        return this.getNumeroDeReserva() == consulta.getNumeroDeReserva();
     }
 
     @Override

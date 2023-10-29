@@ -53,6 +53,7 @@ public interface IObligatorio {
     //pre:      post:Lista todas las consultas a las que asistio o no asistio el paciente
     public Retorno historiaClínicaPaciente (int ci);    
     //pre:      post:Se muestra una matriz con la cantidad de pacientes atendidos por cada especialidad
-    public Retorno reporteDePacientesXFechaYEspecialidad(int mes, int año); 
+    public Retorno reporteDePacientesXFechaYEspecialidad(int mes, int año);
+    Retorno registrarDiaDeConsulta(int codMedico,Date fecha);
      
 }

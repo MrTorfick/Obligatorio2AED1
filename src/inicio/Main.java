@@ -14,7 +14,7 @@ public class Main {
         Sistema s = new Sistema();
 
 
-        Consulta consulta1 = new Consulta(85743756, 5, new Date(2023 - 1900, 5, 15), Estado.Pendiente, 1);
+        Consulta consulta1 = new Consulta(85743756, 5, new Date(2023 - 1900, 5, 15), Estado.Pendiente);
         Lista<Consulta> listaConsultas = new Lista(0);
         listaConsultas.agregarInicio(consulta1);
         Medico medico1 = new Medico("Medico_1", 5, 382839132, 5, listaConsultas);
@@ -36,6 +36,7 @@ public class Main {
         p3_EliminarMedico(p, s);
         p4_RegistrarPaciente(p, s);
         p5_EliminarPaciente(p, s);
+        p6_registrarDiaDeConsulta(p, s);
         p6_ReservaConsulta(p, s);
         p7_CancelarReserva(p, s);
         p8_AnunciaLlegada(p, s);
@@ -85,9 +86,13 @@ public class Main {
         p.ver(s.eliminarPaciente(111111111).resultado, Retorno.Resultado.ERROR_1, "No se elimino el paciente, error1");
     }
 
+    public static void p6_registrarDiaDeConsulta(Prueba p, Sistema s) {
+        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+    }
+
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
-        p.ver(s.reservaConsulta(2, 758472658, new Date(2022 - 1900, 02, 25, 14, 30)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
+        p.ver(s.reservaConsulta(2, 758472658, new Date(2022 - 1900, 02, 25)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
