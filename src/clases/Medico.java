@@ -11,16 +11,16 @@ public class Medico implements Comparable<Medico> {
     private int codMedico;
     private int tel;
     private int especialidad;
-    private Lista<Consulta> listaPacientes;
-    private Cola<Paciente> colaPacientes;
+    private Lista<Consulta> listaPacientesEnEspera;
+    private Cola<Consulta> colaPacientesEsperaNumeros;
     private Lista<Date> listaFechas;
 
-    public Medico(String nombre, int codMedico, int tel, int especialidad, Lista<Consulta> listaPacientes) {
+    public Medico(String nombre, int codMedico, int tel, int especialidad, Lista<Consulta> listaPacientesEnEspera) {
         this.setNombre(nombre);
         this.setCodMedico(codMedico);
         this.setTel(tel);
         this.setEspecialidad(especialidad);
-        this.setListaPacientes(listaPacientes);
+        this.setListaPacientesEnEspera(listaPacientesEnEspera);
     }
 
     public Medico(int codMedico) {
@@ -92,12 +92,12 @@ public class Medico implements Comparable<Medico> {
         this.especialidad = especialidad;
     }
 
-    public Lista<Consulta> getListaPacientes() {
-        return listaPacientes;
+    public Lista<Consulta> getListaPacientesEnEspera() {
+        return listaPacientesEnEspera;
     }
 
-    public void setListaPacientes(Lista<Consulta> listaPacientes) {
-        this.listaPacientes = listaPacientes;
+    public void setListaPacientesEnEspera(Lista<Consulta> listaPacientesEnEspera) {
+        this.listaPacientesEnEspera = listaPacientesEnEspera;
     }
 
     //Compara el nombre de un medico con otro y luego lo ordena alfabeticamente por nombre
@@ -115,4 +115,11 @@ public class Medico implements Comparable<Medico> {
         return "Nombre: " + this.getNombre() + "\nCodigo de medico: " + this.getCodMedico();
     }
 
+    public Cola<Consulta> getColaPacientesEsperaNumeros() {
+        return colaPacientesEsperaNumeros;
+    }
+
+    public void setColaPacientesEsperaNumeros(Cola<Consulta> colaPacientesEsperaNumeros) {
+        this.colaPacientesEsperaNumeros = colaPacientesEsperaNumeros;
+    }
 }

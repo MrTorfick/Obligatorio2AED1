@@ -134,7 +134,7 @@ public class Sistema implements IObligatorio {
 
         Medico medico = new Medico(codMedico);
         Paciente paciente = new Paciente(ciPaciente);
-        Consulta consulta = new Consulta(1);
+        Consulta consultaAux = new Consulta(codMedico, ciPaciente);
         if (!listaPacientes.existeDato(paciente)) {
             r.resultado = Retorno.Resultado.ERROR_1;
             return r;
@@ -142,18 +142,24 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
         } else {
-            Nodo nodo = listaMedicos.obtenerElemento(medico);
-            medico = (Medico) nodo.getDato();
-            if (medico.getListaFechas().existeDato(fecha)) {
+            Nodo nodoAux1 = listaMedicos.obtenerElemento(medico);
+            medico = (Medico) nodoAux1.getDato();
+            Nodo nodoAux2 = listaPacientes.obtenerElemento(paciente);
+            paciente = (Paciente) nodoAux2.getDato();
+            if (!medico.getListaFechas().existeDato(fecha)) {
                 r.resultado = Retorno.Resultado.ERROR_4;
                 return r;
             }
-            if (medico.getListaPacientes() == null || !medico.getListaPacientes().existeDato(consulta)) {
+            if (paciente.getListaConsultasPendientes() == null || !paciente.getListaConsultasPendientes().existeDato(consultaAux)) {
+                /*
                 consulta.setCiPaciente(paciente.getCI());
                 consulta.setCodMedico(medico.getCodMedico());
                 consulta.setFecha(fecha);
                 consulta.setEstado(Estado.Pendiente);
-                medico.getListaPacientes().agregarFinal(consulta);
+                */
+
+                Consulta consulta = new Consulta(paciente.getCI(), medico.getCodMedico(), fecha, Estado.Pendiente);
+                paciente.getListaConsultasPendientes().agregarFinal(consulta);
                 r.resultado = Retorno.Resultado.OK;
             } else {
                 r.resultado = Retorno.Resultado.ERROR_3;
@@ -164,12 +170,67 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno cancelarReserva(int codMedico, int ciPaciente) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+
+        Medico medico = new Medico(codMedico);
+        Paciente paciente = new Paciente(ciPaciente);
+
+        if (!listaPacientes.existeDato(paciente)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        if (!listaMedicos.existeDato(medico)) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+            return r;
+        }
+        Consulta consultaAux = new Consulta(codMedico, ciPaciente);
+        if (paciente.getListaConsultasPendientes() == null || !paciente.getListaConsultasPendientes().existeDato(consultaAux)) {
+            r.resultado = Retorno.Resultado.ERROR_3;
+            return r;
+        }
+        Consulta ObtenerConsultaPendiente = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consultaAux).getDato();
+        if (ObtenerConsultaPendiente.getEstado() == Estado.Cerrada) {
+            r.resultado = Retorno.Resultado.ERROR_3;
+            return r;
+        }
+        if (ObtenerConsultaPendiente.getEstado() != Estado.Pendiente) {
+            r.resultado = Retorno.Resultado.ERROR_4;
+            return r;
+        }
+        Medico medicoConsulta = new Medico(ObtenerConsultaPendiente.getCodMedico());
+        Nodo nodoAux1 = listaMedicos.obtenerElemento(medicoConsulta);
+        medicoConsulta = (Medico) nodoAux1.getDato();
+        Consulta consulta = medicoConsulta.getColaPacientesEsperaNumeros().front();
+        consulta.setNumeroDeReserva(ObtenerConsultaPendiente.getNumeroDeReserva());
+        paciente.getListaConsultasPendientes().borrarElemento(consultaAux);
+        r.resultado = Retorno.Resultado.OK;
+        return r;
     }
 
     @Override
     public Retorno anunciaLlegada(int codMedico, int CIPaciente) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+
+        Paciente pacienteaux = new Paciente(CIPaciente);
+
+        if (!listaPacientes.existeDato(pacienteaux)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+
+        Paciente paciente = (Paciente) listaPacientes.obtenerElemento(pacienteaux).getDato();
+
+        Consulta consulta = new Consulta(codMedico, CIPaciente);
+
+        if (!paciente.getListaConsultasPendientes().existeDato(consulta)) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+            return r;
+        }
+
+        consulta = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consulta).getDato();
+        consulta.setEstado(Estado.En_Espera);
+        return r;
+
     }
 
     @Override
@@ -209,7 +270,7 @@ public class Sistema implements IObligatorio {
             return r;
         }
         Medico medicoAux = (Medico) nodo.getDato();
-        medicoAux.getListaPacientes().mostrar();
+        medicoAux.getListaPacientesEnEspera().mostrar();
         r.resultado = Retorno.Resultado.OK;
         return r;
 

@@ -1,10 +1,13 @@
 package clases;
 
+import tads.Lista;
+
 public class Paciente implements Comparable<Paciente> {
 
     private String nombre;
     private int CI;
     private String direccion;
+    private Lista<Consulta> listaConsultasPendientes;
 
     public Paciente(String nombre, int CI, String direccion) {
         this.setNombre(nombre);
@@ -72,4 +75,11 @@ public class Paciente implements Comparable<Paciente> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    public Lista<Consulta> getListaConsultasPendientes() {
+        return listaConsultasPendientes;
+    }
+
+    public void setListaConsultasPendientes(Lista<Consulta> listaConsultasPendientes) {
+        this.listaConsultasPendientes = listaConsultasPendientes;
+    }
 }

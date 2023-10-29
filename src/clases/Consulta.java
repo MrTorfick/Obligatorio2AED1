@@ -25,8 +25,11 @@ public class Consulta implements Comparable<Consulta> {
     }
 
 
-    public Consulta(int CodReserva) {
-        this.setNumeroDeReserva(CodReserva);
+    public Consulta(int codMedico, int ciPaciente) {
+        this.setNumeroDeReserva(ultimoId++);
+        ultimoId++;
+        this.setCodMedico(codMedico);
+        this.setCiPaciente(ciPaciente);
     }
 
 
@@ -72,7 +75,7 @@ public class Consulta implements Comparable<Consulta> {
 
     public boolean equals(Object o) {
         Consulta consulta = (Consulta) o;//Casteo
-        return this.getNumeroDeReserva() == consulta.getNumeroDeReserva();
+        return this.getCodMedico() == consulta.getCodMedico();
     }
 
     @Override
