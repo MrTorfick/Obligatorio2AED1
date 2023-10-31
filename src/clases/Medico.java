@@ -21,6 +21,7 @@ public class Medico implements Comparable<Medico> {
         this.setTel(tel);
         this.setEspecialidad(especialidad);
         this.setListaPacientesEnEspera(listaPacientesEnEspera);
+        this.setColaPacientesEsperaNumeros(new Cola<Consulta>());
     }
 
     public Medico(int codMedico) {

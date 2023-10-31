@@ -43,7 +43,7 @@ public class Cola<T extends Comparable> implements ICola<T> {
     @Override
     public T front() {
         if (isEmpty()) {
-            throw new IllegalStateException("La cola está vacía");
+            return null;
         }
         return primero.getDato();
     }

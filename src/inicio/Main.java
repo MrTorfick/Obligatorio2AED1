@@ -92,18 +92,19 @@ public class Main {
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
-        p.ver(s.reservaConsulta(2, 758472658, new Date(2022 - 1900, 02, 25)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
+        p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
-        p.ver(s.cancelarReserva(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.cancelarReserva(2, 758472658).resultado, Retorno.Resultado.OK, "Se cancela la reserva");
     }
 
     public static void p8_AnunciaLlegada(Prueba p, Sistema s) {
-        p.ver(s.anunciaLlegada(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.anunciaLlegada(1, 1).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
     }
 
     public static void p9_terminarConsultaMedicoPaciente(Prueba p, Sistema s) {
+        //No funciona
         p.ver(s.terminarConsultaMedicoPaciente(1, 1, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 

@@ -13,6 +13,7 @@ public class Paciente implements Comparable<Paciente> {
         this.setNombre(nombre);
         this.setCI(CI);
         this.setDireccion(direccion);
+        this.setListaConsultasPendientes(new Lista<Consulta>(0));
     }
 
     public Paciente(int CI) {

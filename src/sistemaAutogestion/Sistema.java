@@ -184,6 +184,9 @@ public class Sistema implements IObligatorio {
             return r;
         }
         Consulta consultaAux = new Consulta(codMedico, ciPaciente);
+        Nodo nodoAux1 = listaPacientes.obtenerElemento(paciente);
+        paciente = (Paciente) nodoAux1.getDato();
+
         if (paciente.getListaConsultasPendientes() == null || !paciente.getListaConsultasPendientes().existeDato(consultaAux)) {
             r.resultado = Retorno.Resultado.ERROR_3;
             return r;
@@ -198,10 +201,12 @@ public class Sistema implements IObligatorio {
             return r;
         }
         Medico medicoConsulta = new Medico(ObtenerConsultaPendiente.getCodMedico());
-        Nodo nodoAux1 = listaMedicos.obtenerElemento(medicoConsulta);
-        medicoConsulta = (Medico) nodoAux1.getDato();
+        Nodo nodoAux2 = listaMedicos.obtenerElemento(medicoConsulta);
+        medicoConsulta = (Medico) nodoAux2.getDato();
         Consulta consulta = medicoConsulta.getColaPacientesEsperaNumeros().front();
-        consulta.setNumeroDeReserva(ObtenerConsultaPendiente.getNumeroDeReserva());
+        if (consulta != null) {
+            consulta.setNumeroDeReserva(ObtenerConsultaPendiente.getNumeroDeReserva());
+        }
         paciente.getListaConsultasPendientes().borrarElemento(consultaAux);
         r.resultado = Retorno.Resultado.OK;
         return r;
