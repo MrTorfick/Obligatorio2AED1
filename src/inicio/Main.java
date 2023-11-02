@@ -38,7 +38,7 @@ public class Main {
         p5_EliminarPaciente(p, s);
         p6_registrarDiaDeConsulta(p, s);
         p6_ReservaConsulta(p, s);
-        p7_CancelarReserva(p, s);
+        //p7_CancelarReserva(p, s); //TODO: Hay que agregar mas datos de prueba, para que se pueda anunciar la llegada
         p8_AnunciaLlegada(p, s);
         p9_terminarConsultaMedicoPaciente(p, s);
         p10_cerrarConsulta(p, s);
@@ -63,6 +63,8 @@ public class Main {
         p.ver(s.registrarMedico("Marcos", 1, 3893212, 5).resultado, Retorno.Resultado.OK, "Se registra correctamente el medico");
         p.ver(s.registrarMedico("Pedro", 2, 9364758, 2).resultado, Retorno.Resultado.OK, "Se registra correctamente el medico");
         p.ver(s.registrarMedico("Abel", 11, 7364736, 8).resultado, Retorno.Resultado.OK, "Se registra correctamente el medico");
+        p.ver(s.registrarMedico("Martin", 22, 8746587, 12).resultado, Retorno.Resultado.OK, "Se registra correctamente el medico");
+        p.ver(s.registrarMedico("Matias", 9, 8475647, 19).resultado, Retorno.Resultado.OK, "Se registra correctamente el medico");
         p.ver(s.registrarMedico("Pedro", 2, 9364758, 2).resultado, Retorno.Resultado.ERROR_1, "No se registra el medico, error1");
         p.ver(s.registrarMedico("Peter", 3, 1748576, 21).resultado, Retorno.Resultado.ERROR_2, "No se registra el medico, error2");
         p.ver(s.registrarMedico("Peter", 3, 1748576, 0).resultado, Retorno.Resultado.ERROR_2, "No se registra el medico, error2");
@@ -78,6 +80,7 @@ public class Main {
         p.ver(s.agregarPaciente("Pepe", 234879893, "Direccion del paciente Pepe").resultado, Retorno.Resultado.OK, "Se registro correctamente el paciente");
         p.ver(s.agregarPaciente("Marcos", 858493751, "Direccion del paciente Marcos").resultado, Retorno.Resultado.OK, "Se registro correctamente el paciente");
         p.ver(s.agregarPaciente("Nicolas", 758472658, "Direccion del paciente Nicolas").resultado, Retorno.Resultado.OK, "Se registro correctamente el paciente");
+        p.ver(s.agregarPaciente("Micaela", 826475867, "Direccion de la paciente Micaela").resultado, Retorno.Resultado.OK, "Se registro correctamente el paciente");
         p.ver(s.agregarPaciente("Nicolas", 758472658, "Direccion del paciente Nicolas").resultado, Retorno.Resultado.ERROR_1, "No se registro el paciente, error1");
     }
 
@@ -87,12 +90,15 @@ public class Main {
     }
 
     public static void p6_registrarDiaDeConsulta(Prueba p, Sistema s) {
-        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
+        p.ver(s.registrarDiaDeConsulta(9, new Date(2023 - 1900, 05, 15)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
     }
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
-        p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se asocio al paciente");
+        p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+
+        p.ver(s.reservaConsulta(9, 826475867, new Date(2023 - 1900, 05, 15)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
@@ -100,12 +106,12 @@ public class Main {
     }
 
     public static void p8_AnunciaLlegada(Prueba p, Sistema s) {
-        p.ver(s.anunciaLlegada(1, 1).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
+        p.ver(s.anunciaLlegada(2, 758472658).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
     }
 
     public static void p9_terminarConsultaMedicoPaciente(Prueba p, Sistema s) {
-        //No funciona
-        p.ver(s.terminarConsultaMedicoPaciente(1, 1, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Funcion no implementada");
+
+        p.ver(s.terminarConsultaMedicoPaciente(758472658, 2, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Se termino la consulta");
     }
 
     public static void p10_cerrarConsulta(Prueba p, Sistema s) {

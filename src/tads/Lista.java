@@ -170,6 +170,18 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
     }
 
+    public void mostrarRecursivoConsultas() {
+        mostrarRecursivoConsultas(inicio);
+    }
+
+    private void mostrarRecursivoConsultas(Nodo aux) {
+        if (aux != null) {
+            System.out.println(aux.getDato());
+            mostrarRecursivoConsultas(aux.getSiguiente());
+        }
+    }
+
+
     @Override
     public void borrarElemento(T n) {
         if (!esVacia()) {

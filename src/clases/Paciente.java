@@ -8,12 +8,14 @@ public class Paciente implements Comparable<Paciente> {
     private int CI;
     private String direccion;
     private Lista<Consulta> listaConsultasPendientes;
+    private Lista<Consulta> listaHistoriaClinica;
 
     public Paciente(String nombre, int CI, String direccion) {
         this.setNombre(nombre);
         this.setCI(CI);
         this.setDireccion(direccion);
         this.setListaConsultasPendientes(new Lista<Consulta>(0));
+        this.setListaHistoriaClinica(new Lista<Consulta>(0));
     }
 
     public Paciente(int CI) {
@@ -82,5 +84,13 @@ public class Paciente implements Comparable<Paciente> {
 
     public void setListaConsultasPendientes(Lista<Consulta> listaConsultasPendientes) {
         this.listaConsultasPendientes = listaConsultasPendientes;
+    }
+
+    public Lista<Consulta> getListaHistoriaClinica() {
+        return listaHistoriaClinica;
+    }
+
+    public void setListaHistoriaClinica(Lista<Consulta> listaHistoriaClinica) {
+        this.listaHistoriaClinica = listaHistoriaClinica;
     }
 }

@@ -13,6 +13,7 @@ public class Consulta implements Comparable<Consulta> {
     private int CodMedico;
     private Date Fecha;
     private Estado estado;
+    private String Detalle;
 
 
     public Consulta(int ciPaciente, int codMedico, Date fecha, Estado estado) {
@@ -87,5 +88,13 @@ public class Consulta implements Comparable<Consulta> {
     public String toString() {
         return "Cedula del Paciente " + this.getCiPaciente() + "\nCodigo de medico: " + this.getCodMedico() +
                 "\nFecha: " + this.getFecha() + "\nEstado: " + this.getEstado() + "\nNumero de reserva: " + this.getNumeroDeReserva();
+    }
+
+    public String getDetalle() {
+        return Detalle;
+    }
+
+    public void setDetalle(String detalle) {
+        Detalle = detalle;
     }
 }

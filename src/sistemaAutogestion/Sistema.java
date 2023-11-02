@@ -240,7 +240,27 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno terminarConsultaMedicoPaciente(int CIPaciente, int codMedico, String detalleDeConsulta) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+
+        Paciente paciente = new Paciente(CIPaciente);
+
+        if (!listaPacientes.existeDato(paciente)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        paciente = (Paciente) listaPacientes.obtenerElemento(paciente).getDato();
+        Consulta consulta = new Consulta(codMedico, CIPaciente);
+        if (!paciente.getListaConsultasPendientes().existeDato(consulta)) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+            return r;
+        }
+        consulta = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consulta).getDato();
+        consulta.setDetalle(detalleDeConsulta);
+        consulta.setEstado(Estado.Terminada);
+        paciente.getListaHistoriaClinica().agregarInicio(consulta);
+        r.resultado = Retorno.Resultado.OK;
+        return r;
+
     }
 
     @Override
@@ -275,7 +295,7 @@ public class Sistema implements IObligatorio {
             return r;
         }
         Medico medicoAux = (Medico) nodo.getDato();
-        medicoAux.getListaPacientesEnEspera().mostrar();
+        medicoAux.getListaPacientesEnEspera().mostrarRecursivoConsultas();
         r.resultado = Retorno.Resultado.OK;
         return r;
 
