@@ -1,6 +1,7 @@
 package sistemaAutogestion;
 
 import clases.Consulta;
+import clases.FechaConsulta;
 import clases.Medico;
 import clases.Paciente;
 
@@ -13,6 +14,7 @@ public class Sistema implements IObligatorio {
 
     private Lista listaMedicos;
     private Lista listaPacientes;
+    private int tope;
 
     @Override
     public Retorno crearSistemaDeAutogestion(int maxPacientesporMedico) {
@@ -20,8 +22,9 @@ public class Sistema implements IObligatorio {
         if (maxPacientesporMedico <= 0 || maxPacientesporMedico > 15) {
             r.resultado = Retorno.Resultado.ERROR_1;
         } else {
-            listaMedicos = new Lista(maxPacientesporMedico);
-            listaPacientes = new Lista(0);
+            listaMedicos = new Lista(-1);
+            listaPacientes = new Lista(-1);
+            tope = maxPacientesporMedico;
             r.resultado = Retorno.Resultado.OK;
         }
         return r;
@@ -32,7 +35,7 @@ public class Sistema implements IObligatorio {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
         Medico medico = new Medico(nombre, codMedico, tel, especialidad, new Lista<Consulta>(0));
-        medico.setListaFechas(new Lista<Date>(0));
+        medico.setListaFechas(new Lista<FechaConsulta>(-1));
 
         if (listaMedicos.existeDato(medico)) {
             r.resultado = Retorno.Resultado.ERROR_1;
@@ -109,6 +112,7 @@ public class Sistema implements IObligatorio {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
         Medico medico = new Medico(codMedico);
+        FechaConsulta fechaConsulta = new FechaConsulta(fecha);
 
         if (!listaMedicos.existeDato(medico)) {
             r.resultado = Retorno.Resultado.ERROR_1;
@@ -117,11 +121,12 @@ public class Sistema implements IObligatorio {
         Nodo nodo = listaMedicos.obtenerElemento(medico);
         medico = (Medico) nodo.getDato();
 
-        if (medico.getListaFechas().existeDato(fecha)) {
+        if (medico.getListaFechas().existeDato(fechaConsulta)) {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
         } else {
-            medico.getListaFechas().agregarFinal(fecha);
+            fechaConsulta.setCantPacientes(0);
+            medico.getListaFechas().agregarFinal(fechaConsulta);
             r.resultado = Retorno.Resultado.OK;
         }
 
@@ -146,21 +151,22 @@ public class Sistema implements IObligatorio {
             medico = (Medico) nodoAux1.getDato();
             Nodo nodoAux2 = listaPacientes.obtenerElemento(paciente);
             paciente = (Paciente) nodoAux2.getDato();
-            if (!medico.getListaFechas().existeDato(fecha)) {
+            FechaConsulta fechaConsulta = new FechaConsulta(fecha);
+            if (!medico.getListaFechas().existeDato(fechaConsulta)) {
                 r.resultado = Retorno.Resultado.ERROR_4;
                 return r;
             }
             if (paciente.getListaConsultasPendientes() == null || !paciente.getListaConsultasPendientes().existeDato(consultaAux)) {
-                /*
-                consulta.setCiPaciente(paciente.getCI());
-                consulta.setCodMedico(medico.getCodMedico());
-                consulta.setFecha(fecha);
-                consulta.setEstado(Estado.Pendiente);
-                */
-
+                fechaConsulta = (FechaConsulta) medico.getListaFechas().obtenerElemento(fechaConsulta).getDato();
                 Consulta consulta = new Consulta(paciente.getCI(), medico.getCodMedico(), fecha, Estado.Pendiente);
-                paciente.getListaConsultasPendientes().agregarFinal(consulta);
-                r.resultado = Retorno.Resultado.OK;
+                if (fechaConsulta.getCantPacientes() <= tope) {
+                    paciente.getListaConsultasPendientes().agregarInicio(consulta);
+                    fechaConsulta.setCantPacientes(fechaConsulta.getCantPacientes() + 1);
+                    r.resultado = Retorno.Resultado.OK;
+                } else {
+                    medico.getColaPacientesEsperaNumeros().encolar(consulta);
+                }
+
             } else {
                 r.resultado = Retorno.Resultado.ERROR_3;
             }

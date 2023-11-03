@@ -23,6 +23,10 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         return inicio;
     }
 
+    public int getTope() {
+        return cantMax;
+    }
+
     public Nodo getFin() {
         return fin;
     }
@@ -35,18 +39,31 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         this.fin = fin;
     }
 
+    private boolean VerificarCapacidad() {
+        if (cantElementos == cantMax) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     @Override
     public void agregarInicio(T n) {
-        Nodo nuevo = new Nodo(n);
-        if (esVacia()) {
-            inicio = nuevo;
-            fin = nuevo;
+
+        if (VerificarCapacidad()) {
+            new Exception("La lista esta llena");
         } else {
-            nuevo.setSiguiente(inicio);
-            inicio.setAnterior(nuevo);
-            inicio = nuevo;
-        }
-        cantElementos++;
+
+            Nodo nuevo = new Nodo(n);
+            if (esVacia()) {
+                inicio = nuevo;
+                fin = nuevo;
+            } else {
+                nuevo.setSiguiente(inicio);
+                inicio.setAnterior(nuevo);
+                inicio = nuevo;
+            }
+            cantElementos++;
 
 
        /*
@@ -62,6 +79,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         cantElementos++;
 
         */
+        }
     }
 
     @Override
@@ -376,10 +394,6 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             cantElementos++;
         }
     }
-
-
-
-
 
 
 }
