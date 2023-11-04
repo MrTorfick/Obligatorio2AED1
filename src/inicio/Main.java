@@ -5,6 +5,7 @@ import enums.Estado;
 import sistemaAutogestion.*;
 import tads.*;
 
+import java.util.Calendar;
 import java.util.Date;
 
 public class Main {
@@ -90,15 +91,16 @@ public class Main {
     }
 
     public static void p6_registrarDiaDeConsulta(Prueba p, Sistema s) {
-        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
-        p.ver(s.registrarDiaDeConsulta(9, new Date(2023 - 1900, 05, 15)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
+        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
+        p.ver(s.registrarDiaDeConsulta(9, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
+        p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.ERROR_2, "No se registra el dia de consulta, error2");
     }
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
-        p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, 12, 10)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
 
-        p.ver(s.reservaConsulta(9, 826475867, new Date(2023 - 1900, 05, 15)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        p.ver(s.reservaConsulta(9, 826475867, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
@@ -115,7 +117,7 @@ public class Main {
     }
 
     public static void p10_cerrarConsulta(Prueba p, Sistema s) {
-        p.ver(s.cerrarConsulta(1, new Date(2023 - 1900, 2, 20)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.cerrarConsulta(9, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Funcion no implementada");
     }
 
     public static void p11_ListarMedicos(Prueba p, Sistema s) {

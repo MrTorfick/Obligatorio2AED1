@@ -1,5 +1,6 @@
 package tads;
 
+
 public class Lista<T extends Comparable<T>> implements ILista<T> {
 
     private Nodo<T> inicio;
@@ -297,6 +298,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
 
         */
     }
+
 
     @Override
     public void agregarOrdenado(T x) {

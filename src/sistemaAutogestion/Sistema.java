@@ -5,6 +5,7 @@ import clases.FechaConsulta;
 import clases.Medico;
 import clases.Paciente;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import enums.Estado;
@@ -112,7 +113,9 @@ public class Sistema implements IObligatorio {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
         Medico medico = new Medico(codMedico);
-        FechaConsulta fechaConsulta = new FechaConsulta(fecha);
+        int test=fecha.getMonth();
+        LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
+        FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
 
         if (!listaMedicos.existeDato(medico)) {
             r.resultado = Retorno.Resultado.ERROR_1;
@@ -151,7 +154,8 @@ public class Sistema implements IObligatorio {
             medico = (Medico) nodoAux1.getDato();
             Nodo nodoAux2 = listaPacientes.obtenerElemento(paciente);
             paciente = (Paciente) nodoAux2.getDato();
-            FechaConsulta fechaConsulta = new FechaConsulta(fecha);
+            LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
+            FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
             if (!medico.getListaFechas().existeDato(fechaConsulta)) {
                 r.resultado = Retorno.Resultado.ERROR_4;
                 return r;
@@ -271,7 +275,36 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno cerrarConsulta(int codMédico, Date fechaConsulta) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+
+        Medico medico = new Medico(codMédico);
+
+        if (!listaMedicos.existeDato(medico)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        medico = (Medico) listaMedicos.obtenerElemento(medico).getDato();
+        LocalDate fechaAux = LocalDate.of(fechaConsulta.getYear(), fechaConsulta.getMonth(), fechaConsulta.getDay());
+        FechaConsulta fecha = new FechaConsulta(fechaAux);
+        if (!medico.getListaFechas().existeDato(fecha)) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+            return r;
+        }
+        /*
+        Nodo nodo = medico.getListaFechas().obtenerElemento(fecha);
+        fecha = (FechaConsulta)nodo.getDato();
+        Lista<Consulta> listaConsultas = fecha.getListaConsultas();
+        Nodo nodoAux = listaConsultas.getPrimero();
+        while(nodoAux!=null){
+            Consulta consulta = (Consulta)nodoAux.getDato();
+            if(consulta.getEstado()==Estado.En_Espera){
+                consulta.setEstado(Estado.Cerrada);
+            }
+            nodoAux=nodoAux.getSiguiente();
+        }
+        */
+
+        return r;
     }
 
     @Override

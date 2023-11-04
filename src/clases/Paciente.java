@@ -14,8 +14,8 @@ public class Paciente implements Comparable<Paciente> {
         this.setNombre(nombre);
         this.setCI(CI);
         this.setDireccion(direccion);
-        this.setListaConsultasPendientes(new Lista<Consulta>(0));
-        this.setListaHistoriaClinica(new Lista<Consulta>(0));
+        this.setListaConsultasPendientes(new Lista<Consulta>(-1));
+        this.setListaHistoriaClinica(new Lista<Consulta>(-1));
     }
 
     public Paciente(int CI) {

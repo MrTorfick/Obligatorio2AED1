@@ -32,6 +32,9 @@ public class Consulta implements Comparable<Consulta> {
         this.setCodMedico(codMedico);
         this.setCiPaciente(ciPaciente);
     }
+    public Consulta(int codMedico){
+        this.setCodMedico(codMedico);
+    }
 
 
     public int getCiPaciente() {
