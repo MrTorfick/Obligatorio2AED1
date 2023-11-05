@@ -84,18 +84,4 @@ public class Cola<T extends Comparable> implements ICola<T> {
         return null;
     }
 
-    /*
-    @Override
-    public ICola<T> Invertir() {
-        Cola<T> listaInvertida = new Cola();
-        Nodo<T> aux = primero;
-
-        while (aux != null) {
-            listaInvertida.encolar(aux.getDato());
-            aux = aux.getSiguiente();
-        }
-        return listaInvertida;
-    }
-    */
-
 }

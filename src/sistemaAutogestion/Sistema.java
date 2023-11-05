@@ -35,7 +35,7 @@ public class Sistema implements IObligatorio {
     public Retorno registrarMedico(String nombre, int codMedico, int tel, int especialidad) {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
-        Medico medico = new Medico(nombre, codMedico, tel, especialidad, new Lista<Consulta>(0));
+        Medico medico = new Medico(nombre, codMedico, tel, especialidad, new Lista<Consulta>(-1));
         medico.setListaFechas(new Lista<FechaConsulta>(-1));
 
         if (listaMedicos.existeDato(medico)) {
@@ -113,7 +113,7 @@ public class Sistema implements IObligatorio {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
         Medico medico = new Medico(codMedico);
-        int test=fecha.getMonth();
+        int test = fecha.getMonth();
         LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
         FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
 
@@ -236,7 +236,13 @@ public class Sistema implements IObligatorio {
         Paciente paciente = (Paciente) listaPacientes.obtenerElemento(pacienteaux).getDato();
 
         Consulta consulta = new Consulta(codMedico, CIPaciente);
+        if (paciente.getListaConsultasPendientes().esVacia()) {
+            r.resultado = Retorno.Resultado.ERROR_2;
+            return r;
+        }
 
+
+        consulta = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consulta).getDato();
         if (!paciente.getListaConsultasPendientes().existeDato(consulta)) {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
@@ -244,6 +250,11 @@ public class Sistema implements IObligatorio {
 
         consulta = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consulta).getDato();
         consulta.setEstado(Estado.En_Espera);
+        Medico medico = new Medico(codMedico);
+        medico = (Medico) listaMedicos.obtenerElemento(medico).getDato();
+        medico.getListaPacientesEnEspera().agregarInicio(consulta);
+
+        r.resultado = Retorno.Resultado.OK;
         return r;
 
     }
@@ -333,8 +344,10 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_1;
             return r;
         }
-        Medico medicoAux = (Medico) nodo.getDato();
-        medicoAux.getListaPacientesEnEspera().mostrarRecursivoConsultas();
+        medico = (Medico) nodo.getDato();
+        medico.getListaPacientesEnEspera().mostrarRecursivo();
+        medico.getColaPacientesEsperaNumeros().Mostrar();
+//TODO: Falta hacer que liste todas las consultas, no importa el estado de este medico
         r.resultado = Retorno.Resultado.OK;
         return r;
 
@@ -342,17 +355,57 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno listarPacientesEnEspera(int codMédico, Date fecha) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Medico medico = new Medico(codMédico);
+        medico = (Medico) listaMedicos.obtenerElemento(medico).getDato();
+        LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
+        FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
+        if (!medico.getListaFechas().existeDato(fechaConsulta)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        Lista<Consulta> listaConsultas = medico.getListaPacientesEnEspera();
+        Lista<Paciente> listaPacientesEnEspera = new Lista<Paciente>(-1);
+        Nodo nodo = listaConsultas.getInicio();
+        while (nodo != null) {
+            Consulta consulta = (Consulta) nodo.getDato();
+            if (consulta.getFecha().equals(fecha)) {
+                Paciente paciente = new Paciente(consulta.getCiPaciente());
+                paciente = (Paciente) listaPacientes.obtenerElemento(paciente).getDato();
+                listaPacientesEnEspera.agregarOrdenado(paciente);
+            }
+            nodo = nodo.getSiguiente();
+        }
+        listaPacientesEnEspera.mostrar();
+        r.resultado = Retorno.Resultado.OK;
+        return r;
     }
 
     @Override
     public Retorno consultasPendientesPaciente(int CIPaciente) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Paciente paciente = new Paciente(CIPaciente);
+        if (!listaPacientes.existeDato(paciente)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        paciente = (Paciente) listaPacientes.obtenerElemento(paciente).getDato();
+        paciente.getListaConsultasPendientes().mostrarRecursivo();
+        r.resultado = Retorno.Resultado.OK;
+        return r;
     }
 
     @Override
     public Retorno historiaClínicaPaciente(int ci) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
+        Paciente paciente = new Paciente(ci);
+        if (!listaPacientes.existeDato(paciente)) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        paciente = (Paciente) listaPacientes.obtenerElemento(paciente).getDato();
+        paciente.getListaHistoriaClinica().mostrarRecursivo();
+        return r;
     }
 
     @Override

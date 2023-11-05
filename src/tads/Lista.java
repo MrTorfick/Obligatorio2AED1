@@ -189,14 +189,14 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
     }
 
-    public void mostrarRecursivoConsultas() {
-        mostrarRecursivoConsultas(inicio);
+    public void mostrarRecursivo() {
+        mostrarRecursivo(inicio);
     }
 
-    private void mostrarRecursivoConsultas(Nodo aux) {
+    private void mostrarRecursivo(Nodo aux) {
         if (aux != null) {
             System.out.println(aux.getDato());
-            mostrarRecursivoConsultas(aux.getSiguiente());
+            mostrarRecursivo(aux.getSiguiente());
         }
     }
 
@@ -225,6 +225,8 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
 
     }
+
+
 
     @Override
     public int cantElementos() {

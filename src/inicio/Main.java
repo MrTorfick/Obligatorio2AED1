@@ -39,7 +39,7 @@ public class Main {
         p5_EliminarPaciente(p, s);
         p6_registrarDiaDeConsulta(p, s);
         p6_ReservaConsulta(p, s);
-        //p7_CancelarReserva(p, s); //TODO: Hay que agregar mas datos de prueba, para que se pueda anunciar la llegada
+        p7_CancelarReserva(p, s);
         p8_AnunciaLlegada(p, s);
         p9_terminarConsultaMedicoPaciente(p, s);
         p10_cerrarConsulta(p, s);
@@ -93,14 +93,15 @@ public class Main {
     public static void p6_registrarDiaDeConsulta(Prueba p, Sistema s) {
         p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
         p.ver(s.registrarDiaDeConsulta(9, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
+        p.ver(s.registrarDiaDeConsulta(22, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se registra el dia de consulta");
         p.ver(s.registrarDiaDeConsulta(2, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.ERROR_2, "No se registra el dia de consulta, error2");
     }
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
         p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
-
         p.ver(s.reservaConsulta(9, 826475867, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        p.ver(s.reservaConsulta(22, 858493751, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
     }
 
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
@@ -108,12 +109,14 @@ public class Main {
     }
 
     public static void p8_AnunciaLlegada(Prueba p, Sistema s) {
-        p.ver(s.anunciaLlegada(2, 758472658).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
+        p.ver(s.anunciaLlegada(22, 858493751).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
+        p.ver(s.anunciaLlegada(9, 826475867).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
+        p.ver(s.anunciaLlegada(2, 758472658).resultado, Retorno.Resultado.ERROR_2, "No se anuncia la llegada, error2");
     }
 
     public static void p9_terminarConsultaMedicoPaciente(Prueba p, Sistema s) {
-
-        p.ver(s.terminarConsultaMedicoPaciente(758472658, 2, "Detalles de la consulta").resultado, Retorno.Resultado.OK, "Se termino la consulta");
+        p.ver(s.terminarConsultaMedicoPaciente(858493751, 22, "Detalles de la consulta 1").resultado, Retorno.Resultado.OK, "Se termino la consulta");
+        p.ver(s.terminarConsultaMedicoPaciente(758472658, 2, "Detalles de la consulta 2").resultado, Retorno.Resultado.ERROR_2, "No es posible terminar la consulta, error2");
     }
 
     public static void p10_cerrarConsulta(Prueba p, Sistema s) {
@@ -129,7 +132,7 @@ public class Main {
     }
 
     public static void p13_ListarConsultas(Prueba p, Sistema s) {
-        p.ver(s.listarConsultas(2).resultado, Retorno.Resultado.OK, "Se listan las consultas");
+        p.ver(s.listarConsultas(9).resultado, Retorno.Resultado.OK, "Se listan las consultas");
     }
 
     public static void p14_consultasPendientesPaciente(Prueba p, Sistema s) {

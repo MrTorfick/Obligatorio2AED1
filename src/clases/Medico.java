@@ -10,7 +10,6 @@ public class Medico implements Comparable<Medico> {
     private int tel;
     private int especialidad;
     private Lista<Consulta> listaPacientesEnEspera;
-    private Lista<Consulta> consultasAsignadas;
     private Cola<Consulta> colaPacientesEsperaNumeros;
     private Lista<FechaConsulta> listaFechas;
 
@@ -123,11 +122,4 @@ public class Medico implements Comparable<Medico> {
         this.colaPacientesEsperaNumeros = colaPacientesEsperaNumeros;
     }
 
-    public Lista<Consulta> getConsultasAsignadas() {
-        return consultasAsignadas;
-    }
-
-    public void setConsultasAsignadas(Lista<Consulta> consultasAsignadas) {
-        this.consultasAsignadas = consultasAsignadas;
-    }
 }
