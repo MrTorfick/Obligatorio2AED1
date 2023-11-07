@@ -78,6 +78,21 @@ public class Cola<T extends Comparable> implements ICola<T> {
     }
 
 
+    public void MostrarRecursivo() {
+        MostrarRecursivo(primero);
+    }
+
+    public void MostrarRecursivo(Nodo<T> aux) {
+        if (aux != null) {
+            System.out.println(aux.getDato());
+            MostrarRecursivo(aux.getSiguiente());
+        }
+
+    }
+
+
+
+
     //TODO
     @Override
     public T[] datos() {

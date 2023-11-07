@@ -84,7 +84,7 @@ public class Consulta implements Comparable<Consulta> {
 
     @Override
     public int compareTo(Consulta o) {
-        return 0;
+        return this.getFecha().compareTo(o.getFecha());
     }
 
 

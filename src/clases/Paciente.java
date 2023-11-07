@@ -1,6 +1,10 @@
 package clases;
 
+import enums.Estado;
 import tads.Lista;
+import tads.Nodo;
+
+import java.util.Date;
 
 public class Paciente implements Comparable<Paciente> {
 
@@ -16,6 +20,36 @@ public class Paciente implements Comparable<Paciente> {
         this.setDireccion(direccion);
         this.setListaConsultasPendientes(new Lista<Consulta>(-1));
         this.setListaHistoriaClinica(new Lista<Consulta>(-1));
+    }
+
+
+    public Lista<Consulta> ObtenerConsultasHistoriaClinica(int codMedico) {
+        Lista<Consulta> lista = new Lista<Consulta>(-1);
+        Nodo nodo = listaHistoriaClinica.getInicio();
+        while (nodo != null) {
+            Consulta consulta = (Consulta) nodo.getDato();
+            if (consulta.getCodMedico() == codMedico) {
+                lista.agregarInicio(consulta);
+            }
+            nodo = nodo.getSiguiente();
+        }
+        if (lista.cantElementos() > 0) {
+            return lista;
+        }
+        return null;
+    }
+
+    public void CerrarConsultasNoAsistio(int codMedico, Date Fecha) {
+        Nodo nodo = listaConsultasPendientes.getInicio();
+        while (nodo != null) {
+            Consulta consulta = (Consulta) nodo.getDato();
+            if (consulta.getCodMedico() == codMedico && consulta.getFecha().equals(Fecha) && consulta.getEstado() == Estado.Pendiente) {
+                consulta.setEstado(Estado.No_Asistio);
+                listaHistoriaClinica.agregarInicio(consulta);
+                listaConsultasPendientes.borrarElemento(consulta);
+            }
+            nodo = nodo.getSiguiente();
+        }
     }
 
     public Paciente(int CI) {

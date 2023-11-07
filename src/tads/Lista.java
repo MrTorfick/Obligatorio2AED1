@@ -227,7 +227,6 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
     }
 
 
-
     @Override
     public int cantElementos() {
         return cantElementos;
@@ -300,6 +299,24 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
 
         */
     }
+
+    public void agregarOrdenadoCola(Cola<T> cola){
+        Nodo aux = (Nodo) cola.front();
+        while(aux != null){
+            this.agregarOrdenado((T)aux.getDato());
+            aux = aux.getSiguiente();
+        }
+    }
+
+    public void agregarOrdenadoListas(Lista<T> lista) {
+        Nodo aux = lista.getInicio();
+        while (aux != null) {
+            this.agregarOrdenado((T) aux.getDato());
+            aux = aux.getSiguiente();
+        }
+    }
+
+
 
 
     @Override

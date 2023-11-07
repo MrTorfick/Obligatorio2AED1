@@ -2,6 +2,9 @@ package clases;
 
 import tads.Cola;
 import tads.Lista;
+import tads.Nodo;
+
+import java.util.Date;
 
 public class Medico implements Comparable<Medico> {
 
@@ -34,6 +37,18 @@ public class Medico implements Comparable<Medico> {
         this.listaFechas = fecha;
     }
 
+    public FechaConsulta ObtenerFechaConsulta(Date Fecha) {
+
+        Nodo nodo = listaFechas.getInicio();
+        while (nodo != null) {
+            FechaConsulta fecha = (FechaConsulta) nodo.getDato();
+            if (fecha.getFecha().equals(Fecha)) {
+                return fecha;
+            }
+            nodo = nodo.getSiguiente();
+        }
+        return null;
+    }
 
     /**
      * @return the nombre

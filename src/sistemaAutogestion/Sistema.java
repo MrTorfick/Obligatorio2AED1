@@ -113,7 +113,6 @@ public class Sistema implements IObligatorio {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
         Medico medico = new Medico(codMedico);
-        int test = fecha.getMonth();
         LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
         FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
 
@@ -301,19 +300,9 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
         }
-        /*
-        Nodo nodo = medico.getListaFechas().obtenerElemento(fecha);
-        fecha = (FechaConsulta)nodo.getDato();
-        Lista<Consulta> listaConsultas = fecha.getListaConsultas();
-        Nodo nodoAux = listaConsultas.getPrimero();
-        while(nodoAux!=null){
-            Consulta consulta = (Consulta)nodoAux.getDato();
-            if(consulta.getEstado()==Estado.En_Espera){
-                consulta.setEstado(Estado.Cerrada);
-            }
-            nodoAux=nodoAux.getSiguiente();
-        }
-        */
+
+        FechaConsulta consulta = medico.ObtenerFechaConsulta(fechaConsulta);
+        consulta.CerrarConsultasNoAsistio(codMédico, fechaConsulta);
 
         return r;
     }
@@ -344,10 +333,25 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_1;
             return r;
         }
+        Lista<Consulta> listaConsultas = new Lista<>(-1);
         medico = (Medico) nodo.getDato();
-        medico.getListaPacientesEnEspera().mostrarRecursivo();
-        medico.getColaPacientesEsperaNumeros().Mostrar();
-//TODO: Falta hacer que liste todas las consultas, no importa el estado de este medico
+        listaConsultas.agregarOrdenadoListas(medico.getListaPacientesEnEspera());
+        listaConsultas.agregarOrdenadoCola(medico.getColaPacientesEsperaNumeros());
+        Lista<FechaConsulta> listaAux = medico.getListaFechas();
+        Nodo nodoAux = listaAux.getInicio();
+        while (nodoAux != null) {
+            FechaConsulta fechaConsulta = (FechaConsulta) nodoAux.getDato();
+            Lista<Paciente> listaAuxPacientes = fechaConsulta.getListaPacientes();
+            Nodo nodoAuxPacientes = listaAuxPacientes.getInicio();
+            while (nodoAuxPacientes != null) {
+                Paciente paciente = (Paciente) nodoAuxPacientes.getDato();
+                listaConsultas.agregarOrdenadoListas(paciente.ObtenerConsultasHistoriaClinica(codMédico));
+                nodoAuxPacientes = nodoAuxPacientes.getSiguiente();
+            }
+            nodoAux = nodoAux.getSiguiente();
+        }
+
+        listaConsultas.mostrarRecursivo();
         r.resultado = Retorno.Resultado.OK;
         return r;
 
