@@ -15,21 +15,15 @@ public class Main {
         Sistema s = new Sistema();
 
 
+        /*
         Consulta consulta1 = new Consulta(85743756, 5, new Date(2023 - 1900, 5, 15), Estado.Pendiente);
-        Lista<Consulta> listaConsultas = new Lista(0);
+        Lista<Consulta> listaConsultas = new Lista(-1);
         listaConsultas.agregarInicio(consulta1);
         Medico medico1 = new Medico("Medico_1", 5, 382839132, 5, listaConsultas);
-        //Medico medico2 = new Medico("Medico_2", 3, 727473857, 5);
-        //Medico medico3 = new Medico("Medico_3", 44, 207584365, 5);
-        //Medico medico4 = new Medico("Medico_4", 1, 764285693, 5);
 
         Lista<Medico> listaMedicos = new Lista(40);
         listaMedicos.agregarInicio(medico1);
-
-        Paciente paciente1 = new Paciente("Paciente_1", 85743756, "Direccion Paciente 1");
-        Paciente paciente2 = new Paciente("Paciente_2", 36574068, "Direccion Paciente 1");
-        Paciente paciente3 = new Paciente("Paciente_3", 17485748, "Direccion Paciente 1");
-        Paciente paciente4 = new Paciente("Paciente_4", 27593063, "Direccion Paciente 1");
+        */
 
         p.inicializarResultadosPrueba();
         p1_creacionSistema(p, s);
@@ -55,7 +49,7 @@ public class Main {
     }
 
     public static void p1_creacionSistema(Prueba p, Sistema s) {
-        p.ver(s.crearSistemaDeAutogestion(10).resultado, Retorno.Resultado.OK, "Se crea correctamente el sistema con capacidad 10");
+        p.ver(s.crearSistemaDeAutogestion(2).resultado, Retorno.Resultado.OK, "Se crea correctamente el sistema con capacidad 10");
         p.ver(s.crearSistemaDeAutogestion(-5).resultado, Retorno.Resultado.ERROR_1, "No se crea el sistema, error1");
         p.ver(s.crearSistemaDeAutogestion(20).resultado, Retorno.Resultado.ERROR_1, "No se crea el sistema, error1");
     }
@@ -136,7 +130,7 @@ public class Main {
     }
 
     public static void p14_consultasPendientesPaciente(Prueba p, Sistema s) {
-        p.ver(s.consultasPendientesPaciente(1).resultado, Retorno.Resultado.OK, "Se listan las consultas pendientes de un paciente determinado");
+        p.ver(s.consultasPendientesPaciente(858493751).resultado, Retorno.Resultado.OK, "Se listan las consultas pendientes de un paciente determinado");
     }
 
     public static void p15_historiaClínicaPaciente(Prueba p, Sistema s) {
@@ -144,7 +138,7 @@ public class Main {
     }
 
     public static void p16_reporteDePacientesXFechaYEspecialidad(Prueba p, Sistema s) {
-        p.ver(s.reporteDePacientesXFechaYEspecialidad(1, 1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.reporteDePacientesXFechaYEspecialidad(7, 2023).resultado, Retorno.Resultado.OK, "Se muestra la matriz correspondiente");
     }
 
 

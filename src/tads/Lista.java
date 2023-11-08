@@ -51,10 +51,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
     @Override
     public void agregarInicio(T n) {
 
-        if (VerificarCapacidad()) {
-            new Exception("La lista esta llena");
-        } else {
-
+        if (!VerificarCapacidad()) {
             Nodo nuevo = new Nodo(n);
             if (esVacia()) {
                 inicio = nuevo;
@@ -65,50 +62,23 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
                 inicio = nuevo;
             }
             cantElementos++;
-
-
-       /*
-        Nodo nuevo = new Nodo(n);
-        if (esVacia()) {
-            inicio = nuevo;
-            fin = nuevo;
-        } else {
-            nuevo.setSiguiente(inicio);
-            inicio = nuevo;
-
-        }
-        cantElementos++;
-
-        */
         }
     }
 
     @Override
     public void agregarFinal(T n) {
 
-
         if (esVacia()) {
             agregarInicio(n);
         } else {
-            Nodo nuevo = new Nodo(n);
-            fin.setSiguiente(nuevo);
-            nuevo.setAnterior(fin);
-            fin = nuevo;
-            cantElementos++;
+            if (!VerificarCapacidad()) {
+                Nodo nuevo = new Nodo(n);
+                fin.setSiguiente(nuevo);
+                nuevo.setAnterior(fin);
+                fin = nuevo;
+                cantElementos++;
+            }
         }
-
-
-        /*
-        if (esVacia()) {
-            agregarInicio(n);
-        } else {
-            Nodo nuevo = new Nodo(n);
-            fin.setSiguiente(nuevo);
-            fin = nuevo;
-        }
-        cantElementos++;
-
-         */
     }
 
     @Override
@@ -300,10 +270,10 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         */
     }
 
-    public void agregarOrdenadoCola(Cola<T> cola){
+    public void agregarOrdenadoCola(Cola<T> cola) {
         Nodo aux = (Nodo) cola.front();
-        while(aux != null){
-            this.agregarOrdenado((T)aux.getDato());
+        while (aux != null) {
+            this.agregarOrdenado((T) aux.getDato());
             aux = aux.getSiguiente();
         }
     }
@@ -315,8 +285,6 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             aux = aux.getSiguiente();
         }
     }
-
-
 
 
     @Override

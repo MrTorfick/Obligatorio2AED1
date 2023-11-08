@@ -165,11 +165,11 @@ public class Sistema implements IObligatorio {
                     paciente.getListaConsultasPendientes().agregarInicio(consulta);
                     fechaConsulta.setCantPacientes(fechaConsulta.getCantPacientes() + 1);
                     fechaConsulta.getListaPacientes().agregarInicio(paciente);
-                    r.resultado = Retorno.Resultado.OK;
+
                 } else {
                     medico.getColaPacientesEsperaNumeros().encolar(consulta);
                 }
-
+                r.resultado = Retorno.Resultado.OK;
             } else {
                 r.resultado = Retorno.Resultado.ERROR_3;
             }
@@ -303,7 +303,7 @@ public class Sistema implements IObligatorio {
 
         FechaConsulta consulta = medico.ObtenerFechaConsulta(fechaConsulta);
         consulta.CerrarConsultasNoAsistio(codMédico, fechaConsulta);
-
+        r.resultado = Retorno.Resultado.OK;
         return r;
     }
 
@@ -421,7 +421,41 @@ public class Sistema implements IObligatorio {
 
     @Override
     public Retorno reporteDePacientesXFechaYEspecialidad(int mes, int año) {
-        return new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
-    }
+        Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
 
+        if (mes <= 0 || mes > 12 || año < 2020 || año > 2023) {
+            r.resultado = Retorno.Resultado.ERROR_1;
+            return r;
+        }
+        int matriz[][] = new int[31][21];
+
+        Nodo nodo = listaPacientes.getInicio();
+        while (nodo != null) {
+            Paciente paciente = (Paciente) nodo.getDato();
+            Lista<Consulta> listaConsultas = paciente.getListaHistoriaClinica();
+            Nodo nodoAux = listaConsultas.getInicio();
+            while (nodoAux != null) {
+                Consulta consulta = (Consulta) nodoAux.getDato();
+                int mess = consulta.getFecha().getMonth();
+                int anio = consulta.getFecha().getYear();
+                anio = anio + 1900;
+                if (consulta.getFecha().getMonth() == mes && anio == año) {
+                    Medico medico = new Medico(consulta.getCodMedico());
+                    medico = (Medico) listaMedicos.obtenerElemento(medico).getDato();
+                    int dia = consulta.getFecha().getDate();
+                    matriz[consulta.getFecha().getDate()][medico.getEspecialidad()]++;
+                }
+                nodoAux = nodoAux.getSiguiente();
+            }
+            nodo = nodo.getSiguiente();
+        }
+        for (int i = 1; i < matriz.length; i++) {
+            System.out.println("Dia: " + i);
+            for (int j = 1; j < matriz[i].length; j++) {
+                System.out.println("Especialidad: " + j + " Cantidad: " + matriz[i][j]);
+            }
+        }
+        r.resultado = Retorno.Resultado.OK;
+        return r;
+    }
 }
