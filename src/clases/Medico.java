@@ -4,6 +4,7 @@ import tads.Cola;
 import tads.Lista;
 import tads.Nodo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Medico implements Comparable<Medico> {
@@ -40,9 +41,10 @@ public class Medico implements Comparable<Medico> {
     public FechaConsulta ObtenerFechaConsulta(Date Fecha) {
 
         Nodo nodo = listaFechas.getInicio();
+        LocalDate fechaAux = LocalDate.of(Fecha.getYear(), Fecha.getMonth(), Fecha.getDay());
         while (nodo != null) {
             FechaConsulta fecha = (FechaConsulta) nodo.getDato();
-            if (fecha.getFecha().equals(Fecha)) {
+            if (fecha.getFecha().equals(fechaAux)) {
                 return fecha;
             }
             nodo = nodo.getSiguiente();

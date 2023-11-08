@@ -136,11 +136,11 @@ public class Main {
     }
 
     public static void p14_consultasPendientesPaciente(Prueba p, Sistema s) {
-        p.ver(s.consultasPendientesPaciente(1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.consultasPendientesPaciente(1).resultado, Retorno.Resultado.OK, "Se listan las consultas pendientes de un paciente determinado");
     }
 
     public static void p15_historiaClínicaPaciente(Prueba p, Sistema s) {
-        p.ver(s.historiaClínicaPaciente(1).resultado, Retorno.Resultado.OK, "Funcion no implementada");
+        p.ver(s.historiaClínicaPaciente(858493751).resultado, Retorno.Resultado.OK, "Se lista la historia clinica de un paciente determinado");
     }
 
     public static void p16_reporteDePacientesXFechaYEspecialidad(Prueba p, Sistema s) {

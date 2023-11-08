@@ -114,7 +114,7 @@ public class Sistema implements IObligatorio {
 
         Medico medico = new Medico(codMedico);
         LocalDate fechaAux = LocalDate.of(fecha.getYear(), fecha.getMonth(), fecha.getDay());
-        FechaConsulta fechaConsulta = new FechaConsulta(fechaAux);
+        FechaConsulta fechaConsulta = new FechaConsulta(fechaAux, tope);
 
         if (!listaMedicos.existeDato(medico)) {
             r.resultado = Retorno.Resultado.ERROR_1;
@@ -127,8 +127,7 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
         } else {
-            fechaConsulta.setCantPacientes(0);
-            medico.getListaFechas().agregarFinal(fechaConsulta);
+            medico.getListaFechas().agregarInicio(fechaConsulta);
             r.resultado = Retorno.Resultado.OK;
         }
 
@@ -165,6 +164,7 @@ public class Sistema implements IObligatorio {
                 if (fechaConsulta.getCantPacientes() <= tope) {
                     paciente.getListaConsultasPendientes().agregarInicio(consulta);
                     fechaConsulta.setCantPacientes(fechaConsulta.getCantPacientes() + 1);
+                    fechaConsulta.getListaPacientes().agregarInicio(paciente);
                     r.resultado = Retorno.Resultado.OK;
                 } else {
                     medico.getColaPacientesEsperaNumeros().encolar(consulta);
@@ -335,8 +335,12 @@ public class Sistema implements IObligatorio {
         }
         Lista<Consulta> listaConsultas = new Lista<>(-1);
         medico = (Medico) nodo.getDato();
-        listaConsultas.agregarOrdenadoListas(medico.getListaPacientesEnEspera());
-        listaConsultas.agregarOrdenadoCola(medico.getColaPacientesEsperaNumeros());
+        if (medico.getListaPacientesEnEspera() != null) {
+            listaConsultas.agregarOrdenadoListas(medico.getListaPacientesEnEspera());
+        }
+        if (medico.getColaPacientesEsperaNumeros() != null) {
+            listaConsultas.agregarOrdenadoCola(medico.getColaPacientesEsperaNumeros());
+        }
         Lista<FechaConsulta> listaAux = medico.getListaFechas();
         Nodo nodoAux = listaAux.getInicio();
         while (nodoAux != null) {
@@ -345,7 +349,9 @@ public class Sistema implements IObligatorio {
             Nodo nodoAuxPacientes = listaAuxPacientes.getInicio();
             while (nodoAuxPacientes != null) {
                 Paciente paciente = (Paciente) nodoAuxPacientes.getDato();
-                listaConsultas.agregarOrdenadoListas(paciente.ObtenerConsultasHistoriaClinica(codMédico));
+                if (paciente.ObtenerConsultasHistoriaClinica(codMédico) != null) {
+                    listaConsultas.agregarOrdenadoListas(paciente.ObtenerConsultasHistoriaClinica(codMédico));
+                }
                 nodoAuxPacientes = nodoAuxPacientes.getSiguiente();
             }
             nodoAux = nodoAux.getSiguiente();
@@ -409,6 +415,7 @@ public class Sistema implements IObligatorio {
         }
         paciente = (Paciente) listaPacientes.obtenerElemento(paciente).getDato();
         paciente.getListaHistoriaClinica().mostrarRecursivo();
+        r.resultado = Retorno.Resultado.OK;
         return r;
     }
 
