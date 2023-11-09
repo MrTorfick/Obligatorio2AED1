@@ -36,13 +36,13 @@ public class Main {
         p7_CancelarReserva(p, s);
         p8_AnunciaLlegada(p, s);
         p9_terminarConsultaMedicoPaciente(p, s);
-        p10_cerrarConsulta(p, s);
-        p11_ListarMedicos(p, s);
-        p12_ListarPacientes(p, s);
-        p13_ListarConsultas(p, s);
-        p14_consultasPendientesPaciente(p, s);
-        p15_historiaClínicaPaciente(p, s);
-        p16_reporteDePacientesXFechaYEspecialidad(p, s);
+        //p10_cerrarConsulta(p, s);
+        //p11_ListarMedicos(p, s);
+        //p12_ListarPacientes(p, s);
+        //p13_ListarConsultas(p, s);
+        //p14_consultasPendientesPaciente(p, s);
+        //p15_historiaClínicaPaciente(p, s);
+        //p16_reporteDePacientesXFechaYEspecialidad(p, s);
         p.imprimirResultadosPrueba();
 
 
@@ -93,23 +93,38 @@ public class Main {
 
     public static void p6_ReservaConsulta(Prueba p, Sistema s) {
 
+
+        p.ver(s.reservaConsulta(22, 758472658, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        p.ver(s.reservaConsulta(22, 826475867, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        p.ver(s.reservaConsulta(22, 858493751, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+
+        /*Original
         p.ver(s.reservaConsulta(2, 758472658, new Date(2023 - 1900, Calendar.OCTOBER, 10)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
         p.ver(s.reservaConsulta(9, 826475867, new Date(2023 - 1900, Calendar.MARCH, 15)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
         p.ver(s.reservaConsulta(22, 858493751, new Date(2023 - 1900, Calendar.AUGUST, 22)).resultado, Retorno.Resultado.OK, "Se reserva la consulta");
+        */
     }
 
+
     public static void p7_CancelarReserva(Prueba p, Sistema s) {
-        p.ver(s.cancelarReserva(2, 758472658).resultado, Retorno.Resultado.OK, "Se cancela la reserva");
+        p.ver(s.cancelarReserva(22, 758472658).resultado, Retorno.Resultado.OK, "Se cancela la reserva");
     }
 
     public static void p8_AnunciaLlegada(Prueba p, Sistema s) {
+
+        p.ver(s.anunciaLlegada(22, 826475867).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
         p.ver(s.anunciaLlegada(22, 858493751).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
+        // p.ver(s.anunciaLlegada(2, 758472658).resultado, Retorno.Resultado.ERROR_2, "No se anuncia la llegada, error2");
+
+        /*
+        * p.ver(s.anunciaLlegada(22, 858493751).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
         p.ver(s.anunciaLlegada(9, 826475867).resultado, Retorno.Resultado.OK, "Se anuncia la llegada");
         p.ver(s.anunciaLlegada(2, 758472658).resultado, Retorno.Resultado.ERROR_2, "No se anuncia la llegada, error2");
+        * */
     }
 
     public static void p9_terminarConsultaMedicoPaciente(Prueba p, Sistema s) {
-        p.ver(s.terminarConsultaMedicoPaciente(858493751, 22, "Detalles de la consulta 1").resultado, Retorno.Resultado.OK, "Se termino la consulta");
+        p.ver(s.terminarConsultaMedicoPaciente(826475867, 22, "Detalles de la consulta 1").resultado, Retorno.Resultado.OK, "Se termino la consulta");
         p.ver(s.terminarConsultaMedicoPaciente(758472658, 2, "Detalles de la consulta 2").resultado, Retorno.Resultado.ERROR_2, "No es posible terminar la consulta, error2");
     }
 

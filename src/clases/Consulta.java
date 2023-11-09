@@ -8,13 +8,13 @@ import java.util.Date;
 public class Consulta implements Comparable<Consulta> {
 
     private int NumeroDeReserva;
-    private int ultimoId = 1;
+    private static int ultimoId = 1;
     private int CiPaciente;
     private int CodMedico;
     private Date Fecha;
     private Estado estado;
     private String Detalle;
-
+    private boolean OrdenarPorNumeroDeReserva = false;
 
     public Consulta(int ciPaciente, int codMedico, Date fecha, Estado estado) {
         this.setCiPaciente(ciPaciente);
@@ -27,12 +27,11 @@ public class Consulta implements Comparable<Consulta> {
 
 
     public Consulta(int codMedico, int ciPaciente) {
-        this.setNumeroDeReserva(ultimoId++);
-        ultimoId++;
         this.setCodMedico(codMedico);
         this.setCiPaciente(ciPaciente);
     }
-    public Consulta(int codMedico){
+
+    public Consulta(int codMedico) {
         this.setCodMedico(codMedico);
     }
 
@@ -84,6 +83,8 @@ public class Consulta implements Comparable<Consulta> {
 
     @Override
     public int compareTo(Consulta o) {
+        if (this.isOrdenarPorNumeroDeReserva())
+            return this.getNumeroDeReserva() - o.getNumeroDeReserva();
         return this.getFecha().compareTo(o.getFecha());
     }
 
@@ -99,5 +100,13 @@ public class Consulta implements Comparable<Consulta> {
 
     public void setDetalle(String detalle) {
         Detalle = detalle;
+    }
+
+    public boolean isOrdenarPorNumeroDeReserva() {
+        return OrdenarPorNumeroDeReserva;
+    }
+
+    public void setOrdenarPorNumeroDeReserva(boolean ordenarPorNumeroDeReserva) {
+        OrdenarPorNumeroDeReserva = ordenarPorNumeroDeReserva;
     }
 }

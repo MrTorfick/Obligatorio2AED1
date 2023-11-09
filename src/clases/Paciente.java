@@ -107,6 +107,14 @@ public class Paciente implements Comparable<Paciente> {
         return "Nombre: " + this.getNombre() + "\nCI: " + this.getCI();
     }
 
+
+
+    /*
+    *
+    * public int compareTo(Medico o) {
+        return this.getNombre().compareTo(o.getNombre());
+    }
+    * */
     @Override
     public int compareTo(Paciente o) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

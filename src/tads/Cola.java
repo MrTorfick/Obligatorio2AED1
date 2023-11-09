@@ -28,16 +28,16 @@ public class Cola<T extends Comparable> implements ICola<T> {
 
     @Override
     public T desencolar() {
-        if (isEmpty()) {
-            throw new IllegalStateException("La cola está vacía");
+        if (!isEmpty()) {
+            T dato = primero.getDato();
+            primero = primero.getSiguiente();
+            if (primero == null) {
+                ultimo = null;
+            }
+            cantidad--;
+            return dato;
         }
-        T dato = primero.getDato();
-        primero = primero.getSiguiente();
-        if (primero == null) {
-            ultimo = null;
-        }
-        cantidad--;
-        return dato;
+        return null;
     }
 
     @Override
@@ -89,8 +89,6 @@ public class Cola<T extends Comparable> implements ICola<T> {
         }
 
     }
-
-
 
 
     //TODO
