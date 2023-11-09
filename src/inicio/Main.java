@@ -15,15 +15,6 @@ public class Main {
         Sistema s = new Sistema();
 
 
-        /*
-        Consulta consulta1 = new Consulta(85743756, 5, new Date(2023 - 1900, 5, 15), Estado.Pendiente);
-        Lista<Consulta> listaConsultas = new Lista(-1);
-        listaConsultas.agregarInicio(consulta1);
-        Medico medico1 = new Medico("Medico_1", 5, 382839132, 5, listaConsultas);
-
-        Lista<Medico> listaMedicos = new Lista(40);
-        listaMedicos.agregarInicio(medico1);
-        */
 
         p.inicializarResultadosPrueba();
         p1_creacionSistema(p, s);

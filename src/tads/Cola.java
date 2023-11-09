@@ -13,6 +13,7 @@ public class Cola<T extends Comparable> implements ICola<T> {
 
     }
 
+
     @Override
     public void encolar(T dato) {
         Nodo<T> nuevoNodo = new Nodo(dato);
@@ -48,10 +49,12 @@ public class Cola<T extends Comparable> implements ICola<T> {
         return primero.getDato();
     }
 
+
     @Override
     public boolean isEmpty() {
         return primero == null;
     }
+
 
     @Override
     public void vaciar() {
@@ -60,14 +63,16 @@ public class Cola<T extends Comparable> implements ICola<T> {
         cantidad = 0;
     }
 
+
     @Override
     public int cantidadNodos() {
         return cantidad;
     }
 
+
     @Override
     public void Mostrar() {
-        if (this.isEmpty()) {
+        if (!this.isEmpty()) {
             Nodo<T> aux = primero;
 
             while (aux != null) {
@@ -78,6 +83,10 @@ public class Cola<T extends Comparable> implements ICola<T> {
     }
 
 
+    /*
+     * Pre: No hay
+     * Post: Muestra los elementos de la cola de forma recursiva
+     * */
     public void MostrarRecursivo() {
         MostrarRecursivo(primero);
     }
@@ -90,11 +99,5 @@ public class Cola<T extends Comparable> implements ICola<T> {
 
     }
 
-
-    //TODO
-    @Override
-    public T[] datos() {
-        return null;
-    }
 
 }

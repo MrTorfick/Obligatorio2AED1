@@ -17,6 +17,8 @@ public class Sistema implements IObligatorio {
     private Lista listaPacientes;
     private int tope;
 
+    //Los metodos los cuales implementan IObligatorio, su pre-post, esta en esa clase (IObligatorio)
+
     @Override
     public Retorno crearSistemaDeAutogestion(int maxPacientesporMedico) {
         Retorno r = new Retorno(Retorno.Resultado.NO_IMPLEMENTADA);
@@ -238,7 +240,6 @@ public class Sistema implements IObligatorio {
             consulta.setNumeroDeReserva(ObtenerConsultaPendiente.getNumeroDeReserva());
         }
         paciente.getListaConsultasPendientes().borrarElemento(consultaAux);//Se borra la consulta de la lista de consultas pendientes del paciente
-        //FechaConsulta fechaConsultaAux = medicoConsulta.ObtenerFechaConsulta(consulta.getFecha());
         FechaConsulta fechaConsultaAux = medicoConsulta.ObtenerFechaConsulta(ObtenerConsultaPendiente.getFecha());
         fechaConsultaAux.getListaPacientes().borrarElemento(paciente);//Se borra el paciente de la fecha de consulta, correspondiente al medico
         fechaConsultaAux.setCantPacientes(fechaConsultaAux.getCantPacientes() - 1);
@@ -313,7 +314,7 @@ public class Sistema implements IObligatorio {
             r.resultado = Retorno.Resultado.ERROR_2;
             return r;
         }
-        //consulta = (Consulta) paciente.getListaConsultasPendientes().obtenerElemento(consulta).getDato();
+
         consulta = (Consulta) medico.getListaPacientesEnEspera().obtenerElemento(consulta).getDato();
         consulta.setDetalle(detalleDeConsulta);
         consulta.setEstado(Estado.Terminada);
@@ -365,6 +366,13 @@ public class Sistema implements IObligatorio {
 
     }
 
+
+    /*
+     * Pre: Ninguno de sus elementos puede ser nulo
+     *
+     * Post: Se listan las consultas de un medico, de forma recursiva
+     *
+     * */
     private void listarConsultasRec(Medico medico, Lista<Consulta> listaConsultas) {
         if (medico.getListaPacientesEnEspera() != null) {
             listaConsultas.agregarOrdenadoListas(medico.getListaPacientesEnEspera());
@@ -382,8 +390,7 @@ public class Sistema implements IObligatorio {
         }
     }
 
-    private void listarConsultasFechaRec(FechaConsulta fechaConsulta, Lista<Consulta> listaConsultas,
-                                         int codMedico) {
+    private void listarConsultasFechaRec(FechaConsulta fechaConsulta, Lista<Consulta> listaConsultas, int codMedico) {
         Lista<Paciente> listaAuxPacientes = fechaConsulta.getListaPacientes();
         Nodo nodoAuxPacientes = listaAuxPacientes.getInicio();
         while (nodoAuxPacientes != null) {

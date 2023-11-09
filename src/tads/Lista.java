@@ -40,6 +40,13 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         this.fin = fin;
     }
 
+
+    /*
+     * Pre: No hay
+     *
+     * Post: Devuelve true si la lista esta llena, false si no lo esta
+     *
+     * */
     private boolean VerificarCapacidad() {
         if (cantElementos == cantMax) {
             return true;
@@ -47,6 +54,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             return false;
         }
     }
+
 
     @Override
     public void agregarInicio(T n) {
@@ -65,6 +73,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
     }
 
+
     @Override
     public void agregarFinal(T n) {
 
@@ -80,6 +89,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             }
         }
     }
+
 
     @Override
     public void borrarInicio() {
@@ -97,17 +107,8 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
 
         }
 
-        /*
-        if (!esVacia()) {
-            Nodo borrar = inicio;
-            inicio = inicio.getSiguiente();
-            borrar.setSiguiente(null);
-            cantElementos--;
-        }
-
-         */
-
     }
+
 
     @Override
     public void borrarFin() {
@@ -123,25 +124,10 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
                 cantElementos--;
             }
         }
-        /*
-        if (!esVacia()) {
-            if (inicio == fin) {
-                vaciar();
-            } else {
-                Nodo aux = inicio;
-                while (aux.getSiguiente().getSiguiente() != null) {
-                    aux = aux.getSiguiente();
-                }
-                aux.setSiguiente(null);
-                fin = aux;
-            }
-            cantElementos--;
-
-
-        }
-        */
 
     }
+
+
 
     @Override
     public void vaciar() {
@@ -149,6 +135,8 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         fin = null;
         cantElementos = 0;
     }
+
+
 
     @Override
     public void mostrar() {
@@ -159,6 +147,10 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
     }
 
+    /*
+     * Pre: No hay
+     * Post: Se muestra la lista recursivamente
+     * */
     public void mostrarRecursivo() {
         mostrarRecursivo(inicio);
     }
@@ -170,6 +162,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             mostrarRecursivo(aux.getSiguiente());
         }
     }
+
 
 
     @Override
@@ -198,10 +191,12 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
     }
 
 
+
     @Override
     public int cantElementos() {
         return cantElementos;
     }
+
 
     @Override
     public Nodo obtenerElemento(T n) {
@@ -221,6 +216,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         return ret;
 
     }
+
 
     @Override
     public boolean existeDato(T n) {
@@ -244,33 +240,13 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
         return existe;
 
-       /*
-        boolean existe = true;
-        if (!esVacia()) {
-
-            if (inicio.getDato().equals(n)) {
-                return existe;
-            } else if (fin.getDato().equals(n)) {
-                return existe;
-            }
-            Nodo aux = inicio.getSiguiente();
-            existe = false;
-            while (aux != null && !existe) {
-
-                if (aux.getDato().equals(n)) {
-                    existe = true;
-                }
-                aux = aux.getSiguiente();
-            }
-        } else {
-            existe = false;
-        }
-
-        return existe;
-
-        */
     }
 
+    /*
+     * Pre: El elemento no puede ser nulo
+     * El elemento debe ser una cola
+     * Post: Agrega los elementos de la cola a la lista de forma ordenada
+     * */
     public void agregarOrdenadoCola(Cola<T> cola) {
         Nodo aux = (Nodo) cola.front();
         while (aux != null) {
@@ -279,6 +255,12 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
         }
     }
 
+    /*
+     * Pre: El elemento no puede ser nulo
+     * El elemento debe ser una lista
+     * Post: Agrega los elementos de la lista a la lista de forma ordeanda
+     * */
+
     public void agregarOrdenadoListas(Lista<T> lista) {
         Nodo aux = lista.getInicio();
         while (aux != null) {
@@ -286,6 +268,8 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             aux = aux.getSiguiente();
         }
     }
+
+
 
 
     @Override
@@ -307,83 +291,4 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
             }
         }
     }
-
-    //Crea un metodo que agrega un elemento de forma ordenada, teniendo en cuenta que es una lista doble (se puede acceder a la anterior posicion)
-
-    public void agregarOrdenado2(T x) {
-        if (esVacia() || inicio.getDato().compareTo(x) >= 0) {
-            this.agregarInicio(x);
-        } else {
-            Nodo aux = inicio;
-            while (aux.getSiguiente() != null && aux.getSiguiente().getDato().compareTo(x) < 0) {
-                aux = aux.getSiguiente();
-            }
-            if (aux.getSiguiente() == null) {
-                this.agregarFinal(x);
-            } else {
-                Nodo nuevo = new Nodo(x);
-                nuevo.setSiguiente(aux.getSiguiente());
-                nuevo.setAnterior(aux);
-                aux.getSiguiente().setAnterior(nuevo);
-                aux.setSiguiente(nuevo);
-                cantElementos++;
-            }
-        }
-    }
-
-    public void agregarOrdenado3(T x) {
-        // Si la lista está vacía o el elemento es menor que el primero, se agrega al inicio
-        if (esVacia() || inicio.getDato().compareTo(x) >= 0) {
-            this.agregarInicio(x);
-            // Si el elemento es mayor que el último, se agrega al final
-        } else if (fin.getDato().compareTo(x) <= 0) {
-            this.agregarFinal(x);
-            // Si no, se busca la posición usando búsqueda binaria
-        } else {
-            // Se inicializa el rango de búsqueda con los índices del primer y último nodo
-            int inicio = 0;
-            int fin = cantElementos - 1;
-            // Se inicializa el puntero al nodo actual con el valor del primer nodo
-            Nodo actual = this.inicio;
-            // Se inicializa el índice del nodo actual con el valor del índice de inicio
-            int actualIndice = inicio;
-            // Se repite hasta encontrar la posición o reducir el rango a un solo elemento
-            while (inicio < fin) {
-                // Se calcula el índice del nodo medio con la mitad del rango
-                int medioIndice = (inicio + fin) / 2;
-                // Se mueve el puntero al nodo actual hasta el nodo medio, avanzando o retrocediendo según sea necesario
-                while (actualIndice < medioIndice) {
-                    actual = actual.getSiguiente();
-                    actualIndice++;
-                }
-                while (actualIndice > medioIndice) {
-                    actual = actual.getAnterior();
-                    actualIndice--;
-                }
-                // Se compara el elemento con el dato del nodo actual
-                int comparacion = actual.getDato().compareTo(x);
-                // Si son iguales, se ha encontrado la posición
-                if (comparacion == 0) {
-                    break;
-                    // Si el elemento es menor que el dato del nodo actual, se reduce el rango a la mitad izquierda
-                } else if (comparacion > 0) {
-                    fin = medioIndice - 1;
-                    // Si el elemento es mayor que el dato del nodo actual, se reduce el rango a la mitad derecha
-                } else {
-                    inicio = medioIndice + 1;
-                }
-            }
-            // Se crea un nuevo nodo con el elemento
-            Nodo nuevo = new Nodo(x);
-            // Se inserta el nuevo nodo entre el nodo actual y el siguiente
-            nuevo.setSiguiente(actual.getSiguiente());
-            nuevo.setAnterior(actual);
-            actual.getSiguiente().setAnterior(nuevo);
-            actual.setSiguiente(nuevo);
-            // Se incrementa el contador de elementos
-            cantElementos++;
-        }
-    }
-
-
 }

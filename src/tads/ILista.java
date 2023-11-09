@@ -10,90 +10,78 @@ public interface ILista<T extends Comparable<T>> {
     public boolean esVacia();
 
     /*
-    pre:
-   
-    post: Agrega un elemento al inicio de la lista
-     */
-
+     * Pre: El elemento no puede ser nulo
+     * Post: Agrega un elemento al inicio de la lista
+     * */
     public void agregarInicio(T n);
 
     /*
-    pre: El elemento no puede ser null
-   
-    post:Agrega un elemento al final de la lista
-     */
+     * Pre: El elemento no puede ser nulo
+     * Post: Agrega un elemento al final de la lista
+     * */
 
     public void agregarFinal(T n);
 
     /*
-    pre: El elemento no puede ser null
-   
-    post: Borra el elemento que se encuentra al inicio
-     */
+     * Pre: No hay
+     * Post: Borra el primer elemento de la lista
+     * */
 
     public void borrarInicio();
 
     /*
-    pre:
-   
-    post: Borra el elemento que se encuentra al final
-     */
+     * Pre: No hay
+     * Post: Borra el ultimo elemento de la lista
+     * */
 
     public void borrarFin();
 
     /*
-    pre:
-   
-    post: Vacia la lista
-     */
+     * Pre: No hay
+     * Post: Vacia la lista
+     * */
 
     public void vaciar();
 
     /*
-    pre:
-   
-    post: Muestra la lista
-     */
+     * Pre: No hay
+     * Post: Muestra la lista
+     * */
 
     public void mostrar();
 
     /*
-    pre: El elemento no puede ser null
-   
-    post: Borra un elemento pasado por parametro
-     */
+     * Pre: El elemento no puede ser nulo
+     * Post: Borra el elemento dado de la lista
+     * */
 
     public void borrarElemento(T n);
 
     /*
-    pre:
-   
-    post: Devuelve la cantidad de elementos de la lista
-     */
+     * Pre: No hay
+     * Post: Retorna la cantidad de elementos de la lista
+     * */
 
     public int cantElementos();
 
     /*
-    pre: El elemento no puede ser null
-   
-    post: Devuelve el elemento en caso de que se encuentre en la lista
-     */
+     * Pre: El elemento no puede ser nulo
+     * Post: Devuelve el elemento buscado
+     * */
 
     public Nodo obtenerElemento(T n);
 
     /*
-    pre:
-   
-    post: Devuelve true si el elemento se encuentra en la lista
-     */
+     * Pre: El elemento no puede ser nulo
+     * Post: Devuelve si existe o no el elemento
+     * */
 
     public boolean existeDato(T n);
 
     /*
-    pre: El elemento no puede ser null
-   
-    post: Agrega el elemento ordenado, segun criterios establecidos en el compareTo
-     */
+     * Pre: El elemento no puede ser nulo
+     * Post: Agrega el elemento a la lista de forma ordenada
+     * */
 
     public void agregarOrdenado(T x);
 
