@@ -166,6 +166,7 @@ public class Lista<T extends Comparable<T>> implements ILista<T> {
     private void mostrarRecursivo(Nodo aux) {
         if (aux != null) {
             System.out.println(aux.getDato());
+            System.out.println(" ");
             mostrarRecursivo(aux.getSiguiente());
         }
     }
